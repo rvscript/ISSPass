@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ISSPass</string>
+    <string name="apitext">Api results</string>
+</resources>
