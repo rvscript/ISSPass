@@ -8,14 +8,11 @@ import com.google.gson.annotations.SerializedName;
 public class ISS {
 
     @SerializedName("message")
-    @Expose
     private String message;
     @SerializedName("request")
-    @Expose
     private Request request;
     @SerializedName("response")
-    @Expose
-    private List<Response> response = null;
+    private List<IssResponse> response = null;
 
     public String getMessage() {
         return message;
@@ -33,11 +30,11 @@ public class ISS {
         this.request = request;
     }
 
-    public List<Response> getResponse() {
+    public List<IssResponse> getResponse() {
         return response;
     }
 
-    public void setResponse(List<Response> response) {
+    public void setResponse(List<IssResponse> response) {
         this.response = response;
     }
 

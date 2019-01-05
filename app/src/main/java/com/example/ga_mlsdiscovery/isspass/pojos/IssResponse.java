@@ -4,13 +4,11 @@ package com.example.ga_mlsdiscovery.isspass.pojos;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Response {
+public class IssResponse {
 
     @SerializedName("duration")
-    @Expose
     private Integer duration;
     @SerializedName("risetime")
-    @Expose
     private Integer risetime;
 
     public Integer getDuration() {
