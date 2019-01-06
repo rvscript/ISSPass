@@ -11,7 +11,10 @@ import android.widget.TextView;
 import com.example.ga_mlsdiscovery.isspass.R;
 import com.example.ga_mlsdiscovery.isspass.pojos.IssResponse;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class ListAdapterWithRecyclerView extends RecyclerView.Adapter<ListAdapterWithRecyclerView.IssViewHolder> {
     private static final String TAG = ListAdapterWithRecyclerView.class.getSimpleName();
@@ -19,8 +22,9 @@ public class ListAdapterWithRecyclerView extends RecyclerView.Adapter<ListAdapte
     private List<IssResponse> issList;
     private Context context;
 
-    public ListAdapterWithRecyclerView(Context context, List<IssResponse> issList) {
-        this.issList = issList;
+    @Inject
+    public ListAdapterWithRecyclerView(Context context) {
+        this.issList = new ArrayList<>();
         this.context = context;
     }
 
@@ -54,5 +58,11 @@ public class ListAdapterWithRecyclerView extends RecyclerView.Adapter<ListAdapte
             tvRise = view.findViewById(R.id.tv_rise);
             tvDuration = view.findViewById(R.id.tv_duration);
         }
+    }
+
+    public void setData(List<IssResponse> data){
+        issList.clear();
+        issList.addAll(data);
+        notifyDataSetChanged();
     }
 }

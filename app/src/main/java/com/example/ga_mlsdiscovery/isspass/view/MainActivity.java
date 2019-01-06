@@ -1,23 +1,16 @@
 package com.example.ga_mlsdiscovery.isspass.view;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.ga_mlsdiscovery.isspass.IssApplication;
 import com.example.ga_mlsdiscovery.isspass.R;
 import com.example.ga_mlsdiscovery.isspass.apis.IssApiService;
 import com.example.ga_mlsdiscovery.isspass.pojos.ISS;
-import com.example.ga_mlsdiscovery.isspass.pojos.IssResponse;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -28,11 +21,12 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     @Inject
     IssApiService issApiService;
+
+    @Inject
+    ListAdapterWithRecyclerView issRecyclerview;
+
     private RecyclerView recyclerView;
 
-    private ListAdapterWithRecyclerView issRecyclerview;
-
-    private List<IssResponse> issResponseList;
     private Context context;
 
     @Override
@@ -43,27 +37,22 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         //Recyclerview
         recyclerView = findViewById(R.id.rv_main);
-        issResponseList = new ArrayList<>();
-        issRecyclerview = new ListAdapterWithRecyclerView(this,issResponseList);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(issRecyclerview);
 
         //dagger
         ((IssApplication)getApplication()).getAppComponent().inject(this);
 
+        recyclerView.setAdapter(issRecyclerview);
         Call<ISS> call = issApiService.getIssPass();
         call.enqueue(new Callback<ISS>() {
             @Override
             public void onResponse(Call<ISS> call, Response<ISS> response) {
                 if(response.isSuccessful()){
                     Log.d("IssResponse-", "onResponse: "+response.body().getResponse());
-                    issResponseList.clear();
-                    issResponseList.addAll(response.body().getResponse());
-                    issResponseList.addAll(response.body().getResponse());
-                    issResponseList.addAll(response.body().getResponse());
-
-                    issRecyclerview.notifyDataSetChanged();
+                    issRecyclerview.setData(response.body().getResponse());
+                    //For debug purposes
 //                    for (IssResponse ir: issResponseList) {
 //                        textView.append("\n"+"riseTime:"+ir.getRisetime()
 //                        +"\n"+"duration:"+ir.getDuration());

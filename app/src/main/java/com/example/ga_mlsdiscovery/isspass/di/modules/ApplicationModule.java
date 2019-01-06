@@ -3,9 +3,14 @@ package com.example.ga_mlsdiscovery.isspass.di.modules;
 import android.content.Context;
 
 import com.example.ga_mlsdiscovery.isspass.apis.IssApiService;
+import com.example.ga_mlsdiscovery.isspass.pojos.IssResponse;
+import com.example.ga_mlsdiscovery.isspass.view.ListAdapterWithRecyclerView;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Singleton;
 
@@ -59,6 +64,13 @@ public class ApplicationModule {
     @Singleton
     IssApiService providesIssApiService(Retrofit retrofit){
         return retrofit.create(IssApiService.class);
+    }
+
+    @Provides
+    @Singleton
+    ListAdapterWithRecyclerView providesListAdapterWithRecyclerView(Context context){
+        this.context = context;
+        return new ListAdapterWithRecyclerView(context);
     }
 
 }
